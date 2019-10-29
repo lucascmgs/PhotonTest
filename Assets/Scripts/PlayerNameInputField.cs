@@ -27,6 +27,8 @@ namespace Com.MyCompany.MyGame
         #endregion
 
 
+        private InputField _inputField;
+
         #region MonoBehaviour CallBacks
 
 
@@ -37,7 +39,7 @@ namespace Com.MyCompany.MyGame
 
 
             string defaultName = string.Empty;
-            InputField _inputField = this.GetComponent<InputField>();
+            _inputField = this.GetComponent<InputField>();
             if (_inputField!=null)
             {
                 if (PlayerPrefs.HasKey(playerNamePrefKey))
@@ -62,18 +64,18 @@ namespace Com.MyCompany.MyGame
         /// Sets the name of the player, and save it in the PlayerPrefs for future sessions.
         /// </summary>
         /// <param name="value">The name of the Player</param>
-        public void SetPlayerName(string value)
+        public void SetPlayerName()
         {
             // #Important
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(_inputField.text))
             {
                 Debug.LogError("Player Name is null or empty");
                 return;
             }
-            PhotonNetwork.NickName = value;
+            PhotonNetwork.NickName = _inputField.text;
 
-
-            PlayerPrefs.SetString(playerNamePrefKey,value);
+            Debug.Log(_inputField.text);
+            PlayerPrefs.SetString(playerNamePrefKey,_inputField.text);
         }
 
 
